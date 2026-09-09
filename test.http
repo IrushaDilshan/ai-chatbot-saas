@@ -2,5 +2,6 @@ POST http://localhost:5000/api/chat
 Content-Type: application/json
 
 {
-  "message": "Hello Gemini! Explain what you can do in one sentence."
+  "company_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+  "message": "What is your return policy?"
 }

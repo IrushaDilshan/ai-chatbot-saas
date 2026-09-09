@@ -1,18 +1,16 @@
 {
   "name": "ai-chatbot-saas",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "type": "module",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@google/genai": "^0.1.1",
+    "@google/genai": "latest",
+    "@google/generative-ai": "^0.24.1",
+    "@supabase/supabase-js": "^2.48.0",
+    "cors": "^2.8.6",
     "dotenv": "^16.4.7",
     "express": "^4.21.2"
   }
