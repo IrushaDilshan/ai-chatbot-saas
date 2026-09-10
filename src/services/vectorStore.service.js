@@ -1,5 +1,11 @@
 import supabase from '../config/supabase.js';
 
+export async function getCompanies() {
+  const { data, error } = await supabase.from('companies').select('*').order('created_at', { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
 export async function createCompany(name) {
   const { data, error } = await supabase.from('companies').insert([{ name }]).select();
   if (error) throw error;
