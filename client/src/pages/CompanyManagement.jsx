@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Building } from 'lucide-react';
 
@@ -6,6 +6,19 @@ export default function CompanyManagement() {
   const [name, setName] = useState('');
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
+
+  const fetchCompanies = async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/company');
+      setCompanies(res.data.companies);
+    } catch (err) {
+      console.error('Error fetching companies:', err);
+    }
+  };
 
   const handleCreate = async (e) => {
     e.preventDefault();
