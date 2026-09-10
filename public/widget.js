@@ -155,7 +155,7 @@
   const win = document.createElement('div');
   win.className = 'widget-window';
   
-  win.innerHTML = \`
+  win.innerHTML = `
     <div class="widget-header">Support Chat</div>
     <div class="widget-messages" id="messages">
       <div class="message bot">Hello! How can I help you today?</div>
@@ -164,7 +164,7 @@
       <input type="text" id="chat-input" placeholder="Type your message..." />
       <button id="send-btn">Send</button>
     </div>
-  \`;
+  `;
   shadow.appendChild(win);
 
   let isOpen = false;
@@ -185,7 +185,7 @@
 
   function addMessage(text, sender) {
     const msg = document.createElement('div');
-    msg.className = \`message \${sender}\`;
+    msg.className = `message ${sender}`;
     msg.textContent = text;
     messagesDiv.appendChild(msg);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -215,7 +215,7 @@
     const backendUrl = scriptSrc ? new URL(scriptSrc).origin : 'http://localhost:5000';
 
     try {
-      const response = await fetch(\`\${backendUrl}/api/chat\`, {
+      const response = await fetch(`${backendUrl}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
