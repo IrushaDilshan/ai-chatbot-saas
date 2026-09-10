@@ -1,4 +1,4 @@
-import { createCompany } from '../services/vectorStore.service.js';
+import { createCompany, getCompanies } from '../services/vectorStore.service.js';
 
 export const createCompanyController = async (req, res) => {
   try {
@@ -9,6 +9,16 @@ export const createCompanyController = async (req, res) => {
     res.status(201).json({ message: 'Company created successfully', company });
   } catch (error) {
     console.error('Error creating company:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getCompaniesController = async (req, res) => {
+  try {
+    const companies = await getCompanies();
+    res.status(200).json({ companies });
+  } catch (error) {
+    console.error('Error fetching companies:', error);
     res.status(500).json({ error: error.message });
   }
 };
