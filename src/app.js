@@ -3,6 +3,7 @@ import cors from 'cors';
 import companyRoutes from './routes/company.routes.js';
 import knowledgeRoutes from './routes/knowledge.routes.js';
 import chatRoutes from './routes/chat.routes.js';
+import clientRoutes from './routes/client.routes.js';
 
 const app = express();
 app.use(cors());
@@ -16,5 +17,6 @@ app.get('/', (req, res) => {
 app.use('/api/company', companyRoutes);
 app.use('/api/knowledge', knowledgeRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/client', clientRoutes);
 
 export default app;

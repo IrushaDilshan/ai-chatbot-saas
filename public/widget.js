@@ -1,7 +1,10 @@
 (function() {
   const currentScript = document.currentScript;
   const companyId = currentScript.getAttribute('data-company-id');
-  
+  const themeColor = currentScript.getAttribute('data-theme-color') || '#4f46e5';
+  const position = currentScript.getAttribute('data-position') || 'bottom-right';
+  const title = currentScript.getAttribute('data-title') || 'Support Chat';
+
   if (!companyId) {
     console.error('Widget missing data-company-id attribute');
     return;
@@ -14,6 +17,9 @@
 
   const shadow = container.attachShadow({ mode: 'open' });
 
+  const isLeft = position === 'bottom-left';
+  const posStyle = isLeft ? 'left: 24px;' : 'right: 24px;';
+
   // Add styles
   const style = document.createElement('style');
   style.textContent = `
@@ -21,11 +27,11 @@
     .widget-btn {
       position: fixed;
       bottom: 24px;
-      right: 24px;
+      ${posStyle}
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #6366f1, #a855f7);
+      background: ${themeColor};
       color: white;
       border: none;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -42,7 +48,7 @@
     .widget-window {
       position: fixed;
       bottom: 100px;
-      right: 24px;
+      ${posStyle}
       width: 350px;
       height: 500px;
       background: white;
@@ -63,7 +69,7 @@
       transform: translateY(0);
     }
     .widget-header {
-      background: linear-gradient(135deg, #6366f1, #a855f7);
+      background: ${themeColor};
       color: white;
       padding: 16px;
       font-weight: 600;
@@ -156,13 +162,13 @@
   win.className = 'widget-window';
   
   win.innerHTML = `
-    <div class="widget-header">Support Chat</div>
+    <div class="widget-header">${title}</div>
     <div class="widget-messages" id="messages">
       <div class="message bot">Hello! How can I help you today?</div>
     </div>
     <div class="widget-input">
       <input type="text" id="chat-input" placeholder="Type your message..." />
-      <button id="send-btn">Send</button>
+      <button id="send-btn" style="background: ${themeColor}; border: none; color: white; border-radius: 8px; padding: 0 16px; cursor: pointer; font-weight: 600;">Send</button>
     </div>
   `;
   shadow.appendChild(win);
@@ -227,8 +233,8 @@
       const data = await response.json();
       loadingMsg.remove();
 
-      if (response.ok && data.reply) {
-        addMessage(data.reply, 'bot');
+      if (response.ok && (data.reply || data.answer)) {
+        addMessage(data.reply || data.answer, 'bot');
       } else {
         addMessage(data.error || 'Sorry, something went wrong.', 'bot');
       }

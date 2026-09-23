@@ -31,7 +31,17 @@ User Question: ${message}
 
     res.json({ reply });
   } catch (error) {
-    console.error('Detailed Error:', error);
-    res.status(500).json({ error: error.message || 'Something went wrong.' });
+    console.error('Detailed Chat Controller Error:', error);
+    const is503Error =
+      error.status === 503 ||
+      error.message?.includes('503') ||
+      error.message?.includes('Service Unavailable') ||
+      error.message?.includes('overloaded');
+
+    const friendlyErrorMessage = is503Error
+      ? 'Server is temporarily busy, please try again in a moment.'
+      : error.message || 'Something went wrong.';
+
+    res.status(500).json({ error: friendlyErrorMessage });
   }
 };
